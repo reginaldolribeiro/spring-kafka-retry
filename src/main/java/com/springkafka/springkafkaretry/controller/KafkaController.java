@@ -1,5 +1,7 @@
-package com.springkafka.springkafkaretry;
+package com.springkafka.springkafkaretry.controller;
 
+import com.springkafka.springkafkaretry.model.UserRequest;
+import com.springkafka.springkafkaretry.producer.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,5 +27,11 @@ public class KafkaController {
         log.info("[Controller] - POST Publisher Default - UserRequest {}", userRequest);
         kafkaProducer.sendObject(topic, userRequest);
         return ResponseEntity.ok(new UserRequest(1L, userRequest.name()));
+    }
+
+    @PostMapping("/avro")
+    public void avro(@RequestBody UserRequest userRequest) {
+        log.info("[Controller] - POST Publisher AVRO - UserRequest {}", userRequest);
+        kafkaProducer.sendAvro("avro-topic", userRequest);
     }
 }

@@ -1,4 +1,4 @@
-package com.springkafka.springkafkaretry;
+package com.springkafka.springkafkaretry.model;
 
 public record UserRequest(
         Long id,

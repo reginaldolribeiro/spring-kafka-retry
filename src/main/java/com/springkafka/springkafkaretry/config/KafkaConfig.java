@@ -1,16 +1,9 @@
-package com.springkafka.springkafkaretry;
+package com.springkafka.springkafkaretry.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.retrytopic.RetryTopicConfiguration;
-import org.springframework.kafka.retrytopic.RetryTopicConfigurationBuilder;
-
-@Configuration
+//@Configuration
 public class KafkaConfig {
 
-    @Value("{spring.kafka.topic}")
+    /*@Value("{spring.kafka.topic}")
     private String topic;
 
     @Bean
@@ -24,5 +17,5 @@ public class KafkaConfig {
                 .notRetryOn(IllegalArgumentException.class)
                 .create(kafkaTemplate);
 
-    }
+    }*/
 }
