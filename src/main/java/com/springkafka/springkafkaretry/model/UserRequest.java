@@ -1,6 +1,6 @@
 package com.springkafka.springkafkaretry.model;
 
 public record UserRequest(
-        Long id,
+        int id,
         String name) {
 }

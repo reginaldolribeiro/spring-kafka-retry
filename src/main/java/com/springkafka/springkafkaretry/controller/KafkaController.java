@@ -26,12 +26,20 @@ public class KafkaController {
     public ResponseEntity<UserRequest> publisherUser(@RequestBody UserRequest userRequest) {
         log.info("[Controller] - POST Publisher Default - UserRequest {}", userRequest);
         kafkaProducer.sendObject(topic, userRequest);
-        return ResponseEntity.ok(new UserRequest(1L, userRequest.name()));
+        return ResponseEntity.ok(new UserRequest(1, userRequest.name()));
     }
 
     @PostMapping("/avro")
     public void avro(@RequestBody UserRequest userRequest) {
         log.info("[Controller] - POST Publisher AVRO - UserRequest {}", userRequest);
         kafkaProducer.sendAvro("avro-topic", userRequest);
+//        kafkaProducer.sendObject(topic, userRequest);
+    }
+
+    @PostMapping("/avro-generic-record")
+    public void avroGenericRecord(@RequestBody UserRequest userRequest) {
+        log.info("[Controller] - POST Publisher AVRO - UserRequest {}", userRequest);
+        kafkaProducer.sendAvroGenericRecord("avro-topic", userRequest);
+//        kafkaProducer.sendObject(topic, userRequest);
     }
 }
