@@ -2,14 +2,12 @@ package com.springkafka.springkafkaretry.controller;
 
 import com.springkafka.springkafkaretry.model.UserRequest;
 import com.springkafka.springkafkaretry.producer.KafkaProducer;
+import com.springkafka.springkafkaretry.service.RetryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +19,7 @@ public class KafkaController {
     private String topic;
 
     private final KafkaProducer kafkaProducer;
+    private final RetryService retryService;
 
     @PostMapping("/publisher-default")
     public ResponseEntity<UserRequest> publisherUser(@RequestBody UserRequest userRequest) {
@@ -39,7 +38,14 @@ public class KafkaController {
     @PostMapping("/avro-generic-record")
     public void avroGenericRecord(@RequestBody UserRequest userRequest) {
         log.info("[Controller] - POST Publisher AVRO - UserRequest {}", userRequest);
-        kafkaProducer.sendAvroGenericRecord("avro-topic", userRequest);
+        kafkaProducer.sendAvroGenericRecord("avro-generic-topic", userRequest);
 //        kafkaProducer.sendObject(topic, userRequest);
+    }
+    
+    @GetMapping("/retry/{value}")
+    public void retry(@PathVariable("value") int value){
+        retryService.retry(value);
+        System.out.println("*** Respondendo o GET /retry/{value}");
+        System.out.println("*** Fim do retry2");
     }
 }
